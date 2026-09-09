@@ -41,10 +41,16 @@
 - Tách read/write bằng event-driven: PostgreSQL lưu dữ liệu gốc, Event Bus cập nhật NoSQL read model cho dashboard, notification và analytics, giúp giảm tải truy vấn.
 - Tách KYC thành luồng `KYC Service → KYC Queue → OCR / Scan / Verification Workers`; queue giúp xử lý bất đồng bộ, retry khi lỗi và tránh quá tải. Tài liệu lưu trong Object Storage, kết quả lưu trong KYC Database.
 
-![Kiến trúc event-driven trong tương lai](./docs/images/future-event-driven.svg)
-
 ## Sơ đồ
 
-- [Kiến trúc hiện tại](./docs/images/architecture.svg)
-- [Kiến trúc event-driven trong tương lai](./docs/images/future-event-driven.svg)
-- [Database ERD](./docs/images/database-erd.svg)
+### Kiến trúc hiện tại
+
+![Kiến trúc hiện tại](./docs/images/architecture.svg)
+
+### Kiến trúc event-driven trong tương lai
+
+![Kiến trúc event-driven trong tương lai](./docs/images/future-event-driven.svg)
+
+### Database ERD
+
+![Database ERD](./docs/images/database-erd.svg)
