@@ -1,0 +1,10 @@
+{
+  "name": "vendor-onboarding-tracker",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "docker compose up --build",
+    "test": "npm --prefix be test && npm --prefix fe test",
+    "build": "npm --prefix be run build && npm --prefix fe run build"
+  }
+}

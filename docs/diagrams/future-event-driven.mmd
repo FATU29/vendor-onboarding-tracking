@@ -1,0 +1,16 @@
+flowchart LR
+    O[Vendor Onboarding Service] --> DB[(PostgreSQL<br/>Source of Truth)]
+    O --> B[(Event Bus)]
+
+    B --> RM[Read Model Projector]
+    RM --> RDB[(NoSQL Read Store<br/>DynamoDB / MongoDB)]
+
+    B --> N[Notification]
+    B --> A[Analytics]
+
+    B -. optional .-> K[KYC Service]
+    K --> KQ[(KYC Queue)]
+    KQ --> W[OCR / Scan / Verification Workers]
+    K --> OBJ[(Object Storage)]
+    W --> OBJ
+    W --> KDB[(KYC Database)]

@@ -1,0 +1,49 @@
+erDiagram
+  USERS {
+    uuid id PK
+    varchar name UK
+  }
+
+  VENDOR_STAGES {
+    smallint id PK
+    varchar name UK
+    smallint sortOrder UK
+    boolean isTerminal
+  }
+
+  VENDORS {
+    uuid id PK
+    varchar name UK
+    varchar region
+    smallint stageId FK
+    timestamptz stageEnteredAt
+    text notes
+    uuid lastUpdatedById FK
+    integer optimisticLock
+  }
+
+  VENDOR_HISTORIES {
+    uuid id PK
+    uuid vendorId FK
+    smallint previousStageId FK
+    smallint nextStageId FK
+    uuid changedById FK
+    timestamptz changedAt
+  }
+
+  APP_SETTINGS {
+    varchar key PK
+    integer integerValue
+    varchar description
+    timestamptz updatedAt
+  }
+
+  USERS o|--o{ VENDORS : "lastUpdatedById (SET NULL)"
+  USERS ||--o{ VENDOR_HISTORIES : "changedById (RESTRICT)"
+  VENDOR_STAGES ||--o{ VENDORS : "stageId (RESTRICT)"
+  VENDOR_STAGES o|--o{ VENDOR_HISTORIES : "previousStageId (RESTRICT)"
+  VENDOR_STAGES ||--o{ VENDOR_HISTORIES : "nextStageId (RESTRICT)"
+  VENDORS ||--o{ VENDOR_HISTORIES : "vendorId (CASCADE)"
+
+  %% optimisticLock is the displayed name for physical column vendors.version.
+  %% notes and previousStageId are nullable; Mermaid ERD cannot display nullability.
