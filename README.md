@@ -38,8 +38,9 @@
 
 - Thêm SSO/RBAC.
 - Dùng WebSocket để cập nhật realtime nếu internal tool có ít người dùng.
-- Tách read/write bằng event-driven: PostgreSQL lưu dữ liệu gốc, Event Bus cập nhật NoSQL read model cho dashboard, notification và analytics, giúp giảm tải truy vấn.
+- Tách read/write bằng event-driven: PostgreSQL lưu dữ liệu gốc, Event Bus cập nhật NoSQL read model cho dashboard, notification và analytics, giúp giảm tải truy vấn ( CQRS PATTERN ).
 - Tách KYC thành luồng `KYC Service → KYC Queue → OCR / Scan / Verification Workers`; queue giúp xử lý bất đồng bộ, retry khi lỗi và tránh quá tải. Tài liệu lưu trong Object Storage, kết quả lưu trong KYC Database.
+- Tương tự sẽ có queue cho Active status => notification hoặc doing something cho bên vendors.
 
 ## Sơ đồ
 
