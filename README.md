@@ -28,6 +28,15 @@
 - Transaction cập nhật vendor và ghi history.
 - `version` phát hiện yêu cầu đang dùng dữ liệu cũ và từ chối ghi đè; Redis lock tuần tự hóa các yêu cầu để mỗi vendor chỉ được cập nhật bởi một tiến trình tại một thời điểm. ( distributed lock, optimistic lock relation-DB )
 
+## Tests
+
+Các test tập trung vào logic có rủi ro nghiệp vụ cao
+
+- **Overdue:** kiểm tra đúng mốc đủ ngày và ngưỡng cấu hình, tránh cảnh báo vendor quá sớm hoặc quá muộn.
+- **Cập nhật vendor:** kiểm tra dữ liệu trả về, đọc/cập nhật ngưỡng và chuyển `version conflict` thành lỗi để không ghi đè thay đổi của coordinator khác.
+- **Đăng nhập:** kiểm tra mock session hợp lệ và từ chối token thiếu hoặc không hợp lệ.
+
+
 ## Giới hạn
 
 - Coordinator được chuyển vendor đến mọi stage.
