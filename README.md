@@ -24,8 +24,9 @@
 
 - Frontend: React, MUI, Zustand và Axios.
 - Backend: NestJS, TypeORM, PostgreSQL và Redis.
-- Cập nhật vendor và history trong cùng một transaction.
-- `version` và Redis lock ngăn cập nhật cùng lúc làm ghi đè dữ liệu.
+- Vấn đề đồng thời: nếu hai coordinator cùng cập nhật một vendor, yêu cầu xử lý sau có thể ghi đè yêu cầu trước, làm mất thay đổi hoặc khiến stage và history sai lệch.
+- Transaction cập nhật vendor và ghi history.
+- `version` phát hiện yêu cầu đang dùng dữ liệu cũ và từ chối ghi đè; Redis lock tuần tự hóa các yêu cầu để mỗi vendor chỉ được cập nhật bởi một tiến trình tại một thời điểm. ( distributed lock, optimistic lock relation-DB )
 
 ## Giới hạn
 
@@ -33,6 +34,8 @@
 - `Active` là stage cuối và không có `Overdue`.
 - Authentication dùng mock session; vendor được tạo bằng seed data.
 - Chưa có tạo/xóa vendor và tích hợp KYC/activation.
+- Read slow khi scale ( khong apply CQRS )
+- Audit logs ơ history only support cho stage + read flow => nen chuyển thaàh jsonB + nosql cho tuong lai
 
 ## Hướng phát triển
 
